@@ -52,6 +52,8 @@ class Flat(models.Model):
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+
 class Appeal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
         verbose_name='Кто пожаловался', related_name='user_appeals')
