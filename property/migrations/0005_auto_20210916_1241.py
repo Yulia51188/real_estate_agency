@@ -3,7 +3,7 @@ from django.db import migrations
 
 def set_new_building_field(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    construction_year_limit = 2015
+    construction_year_limit = 2014
     flats = Flat.objects.all()
     for flat in flats:
         flat.new_building = flat.construction_year > construction_year_limit
