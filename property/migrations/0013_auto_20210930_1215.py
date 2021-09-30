@@ -16,7 +16,7 @@ def copy_owners_from_flats(apps, schema_editor):
 
 
 def delete_all_owners(apps, schema_editor):
-    Owner = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
     Owner.objects.all().delete()
 
 
