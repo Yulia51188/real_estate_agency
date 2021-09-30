@@ -8,10 +8,20 @@ import phonenumbers
 def fill_normalized_phone_numbers(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        parsed_phone = phonenumbers.parse(flat.owners_phonenumber, "RU")
-        flat.owner_pure_phone = phonenumbers.format_number(
-            parsed_phone, phonenumbers.PhoneNumberFormat.E164)
-        flat.save()
+        try:
+            parsed_phone = phonenumbers.parse(flat.owners_phonenumber, "RU")
+            is_valid = phonenumbers.is_valid_number(parsed_phone)
+            is_possible = phonenumbers.is_possible_number(parsed_phone)
+        except phonenumbers.phonenumberutil.NumberParseException:
+            parsed_phone = None
+            is_possible = False
+        finally:
+            if is_possible and is_valid:
+                flat.owner_pure_phone = phonenumbers.format_number(
+                    parsed_phone, phonenumbers.PhoneNumberFormat.E164)
+            else:
+                flat.owner_pure_phone = None
+            flat.save()   
 
 
 def reset_normalized_phone_numbers(apps, schema_editor):
