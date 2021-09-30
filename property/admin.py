@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Appeal
 from .models import Flat
+from .models import Owner
 
 
 class FlatAdmin(admin.ModelAdmin):
@@ -18,5 +19,11 @@ class AppealAdmin(admin.ModelAdmin):
     raw_id_fields = ['flat', 'user']
 
 
+class OwnerAdmin(admin.ModelAdmin):
+    raw_id_fields = ['flats']
+    search_fields = ['full_name']
+
+
 admin.site.register(Flat, FlatAdmin) 
 admin.site.register(Appeal, AppealAdmin) 
+admin.site.register(Owner, OwnerAdmin)
