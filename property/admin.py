@@ -5,6 +5,11 @@ from .models import Flat
 from .models import Owner
 
 
+class OwnersInline(admin.TabularInline):
+    model = Flat.owners.through
+    raw_id_fields = ['owner']
+
+
 class FlatAdmin(admin.ModelAdmin):
     search_fields = ['town', 'town_district', 'address']
     readonly_fields = ['created_at']
@@ -13,6 +18,7 @@ class FlatAdmin(admin.ModelAdmin):
     list_editable = ['new_building']
     list_filter = ['new_building']
     raw_id_fields = ['liked_by']
+    inlines = [OwnersInline]
 
 
 class AppealAdmin(admin.ModelAdmin):
@@ -22,6 +28,7 @@ class AppealAdmin(admin.ModelAdmin):
 class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ['flats']
     search_fields = ['full_name']
+    list_display = ['full_name', 'phonenumber', 'pure_phone']
 
 
 admin.site.register(Flat, FlatAdmin) 
