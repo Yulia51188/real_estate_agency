@@ -6,7 +6,6 @@ from django.db import migrations
 def copy_owners_from_flats(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
-    print()
     for flat in Flat.objects.all():
         Owner.objects.get_or_create(
             full_name=flat.owner,
